@@ -1244,11 +1244,7 @@ mod tests {
     }
     #[test]
     fn swap() {
-        mut_test(
-            "P@sS",
-            &[Memorize, Swap(Val(0), WordLastCharPos)],
-            "S@sP",
-        );
+        mut_test("P@sS", &[Memorize, Swap(Val(0), WordLastCharPos)], "S@sP");
     }
     #[test]
     fn increment() {
@@ -1312,11 +1308,7 @@ mod tests {
     }
     #[test]
     fn rule_v() {
-        mut_test(
-            DEFPWD,
-            &[LowerVowelsUpperConsonants],
-            "aSQDQDF354GDRF;:;é&",
-        );
+        mut_test(DEFPWD, &[LowerVowelsUpperConsonants], "aSQDQDF354GDRF;:;é&");
     }
     #[test]
     fn shift_k_r() {
@@ -1348,11 +1340,7 @@ mod tests {
     }
     #[test]
     fn title_case() {
-        mut_test(
-            "test word",
-            &[TitleCase(OneOf(CCWhitespace))],
-            "Test Word",
-        );
+        mut_test("test word", &[TitleCase(OneOf(CCWhitespace))], "Test Word");
     }
     #[test]
     fn toggle_case() {
@@ -1438,19 +1426,11 @@ mod tests {
     }
     #[test]
     fn insertchar() {
-        mut_test(
-            DEFPWD,
-            &[InsertChar(Val(3), b'K')],
-            "aSQKdqdf354gdrf;:;é&",
-        );
+        mut_test(DEFPWD, &[InsertChar(Val(3), b'K')], "aSQKdqdf354gdrf;:;é&");
     }
     #[test]
     fn overstrike() {
-        mut_test(
-            DEFPWD,
-            &[Overstrike(Val(3), b'K')],
-            "aSQKqdf354gdrf;:;é&",
-        );
+        mut_test(DEFPWD, &[Overstrike(Val(3), b'K')], "aSQKqdf354gdrf;:;é&");
     }
     #[test]
     fn replace_all() {

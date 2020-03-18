@@ -9,6 +9,8 @@ pub struct FragmentContext {
     pub pos: u64,
 }
 
+type CleartextIndex = HashMap<u64, Vec<u8>>;
+
 pub fn process_line(
     out: &mut HashMap<Vec<u8>, Vec<FragmentContext>>,
     pos: u64,
@@ -53,7 +55,7 @@ pub fn process(
     known: &HashSet<&Vec<u8>>,
 ) -> io::Result<(
     HashMap<Vec<u8>, Vec<FragmentContext>>,
-    HashMap<u64, Vec<u8>>,
+    CleartextIndex,
 )> {
     let mut idx = HashMap::new();
 
