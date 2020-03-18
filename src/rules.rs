@@ -51,6 +51,7 @@ fn make_converts() -> Converts {
 }
 
 #[derive(Hash, Eq, PartialEq, Debug, Clone, PartialOrd)]
+#[allow(dead_code)]
 pub enum UserVar {
     UVA,
     UVB,
@@ -65,6 +66,7 @@ pub enum UserVar {
     UVK,
 }
 
+#[allow(dead_code)]
 fn rand_uservar<T: rand::Rng>(rng: &mut T) -> UserVar {
     use UserVar::*;
     match rng.gen_range(0, 11) {
@@ -83,6 +85,7 @@ fn rand_uservar<T: rand::Rng>(rng: &mut T) -> UserVar {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash, PartialOrd)]
+#[allow(dead_code)]
 pub enum Numerical {
     Val(u8),
     MinLen,
@@ -98,6 +101,7 @@ pub enum Numerical {
     Infinite,
 }
 
+#[allow(dead_code)]
 fn rand_numerical<T: rand::Rng>(rng: &mut T) -> Numerical {
     use Numerical::*;
     match rng.gen_range(0, 30) {
@@ -117,6 +121,7 @@ fn rand_numerical<T: rand::Rng>(rng: &mut T) -> Numerical {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash, PartialOrd)]
+#[allow(dead_code)]
 pub enum RejectRule {
     Noop,
     UnlessCaseSensitive,
@@ -143,11 +148,13 @@ pub enum RejectRule {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash, PartialOrd)]
+#[allow(dead_code)]
 pub enum CharSelector {
     OneOf(CharClass),
     NoneOf(CharClass),
 }
 
+#[allow(dead_code)]
 fn rand_charselector<T: rand::Rng>(rng: &mut T) -> CharSelector {
     let c = rand_charclass(rng);
     if rng.gen() {
@@ -158,6 +165,7 @@ fn rand_charselector<T: rand::Rng>(rng: &mut T) -> CharSelector {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash, PartialOrd)]
+#[allow(dead_code)]
 pub enum CharClass {
     CCVowels,
     CCConsonants,
@@ -197,6 +205,7 @@ fn rand_charclass<T: rand::Rng>(rng: &mut T) -> CharClass {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash, PartialOrd)]
+#[allow(dead_code)]
 pub enum CommandRule {
     Noop,
     ToLower,
@@ -253,6 +262,7 @@ pub enum CommandRule {
     MemoryAssign(UserVar, Numerical, Numerical), // untested
 }
 
+#[allow(dead_code)]
 fn rand_commandrule<T: rand::Rng>(rng: &mut T) -> CommandRule {
     use CommandRule::*;
     match rng.gen_range(0, 29) {
@@ -312,6 +322,7 @@ fn rand_commandrule<T: rand::Rng>(rng: &mut T) -> CommandRule {
     }
 }
 
+#[allow(dead_code)]
 pub fn rand_commandrules() -> Vec<CommandRule> {
     use rand::Rng;
     let mut o = Vec::new();
@@ -337,6 +348,7 @@ pub fn rand_commandrules() -> Vec<CommandRule> {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash, PartialOrd)]
+#[allow(dead_code)]
 pub enum Rule {
     Reject(RejectRule),
     Command(CommandRule),
@@ -1023,6 +1035,7 @@ pub fn show_rules(rules: &[Rule]) -> String {
     o
 }
 
+#[allow(dead_code)]
 pub fn show_commands(rules: &[CommandRule]) -> String {
     let mut o = String::new();
     for rule in rules {

@@ -1,8 +1,7 @@
 extern crate clap;
 extern crate crossbeam;
 
-use clap::{App, Arg};
-use indicatif::ProgressBar;
+use std::cmp::Ordering;
 use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::{self, BufRead};
@@ -10,6 +9,9 @@ use std::iter::FromIterator;
 use std::str;
 use std::sync::Arc;
 use std::thread;
+
+use clap::{App, Arg};
+use indicatif::ProgressBar;
 
 mod cleartexts;
 mod matcher;
@@ -40,13 +42,13 @@ fn read_wordlist(wordlist: &str) -> Vec<Vec<u8>> {
     all_lines
 }
 
-fn shorter_rules(a: &Vec<rules::Rule>, b: &Vec<rules::Rule>) -> bool {
+fn shorter_rules(a: &[rules::Rule], b: &[rules::Rule]) -> bool {
     let la = rules::show_rules(a).len();
     let lb = rules::show_rules(b).len();
     la < lb || (la == lb && a < b)
 }
 
-fn sub_set(a: &Vec<u64>, b: &Vec<u64>) -> Vec<u64> {
+fn sub_set(a: &[u64], b: &[u64]) -> Vec<u64> {
     let mut o = Vec::new();
     let mut ai = a.iter();
     let mut bi = b.iter();
@@ -55,15 +57,19 @@ fn sub_set(a: &Vec<u64>, b: &Vec<u64>) -> Vec<u64> {
     loop {
         match (ma, mb) {
             (Some(cura), Some(curb)) => {
-                if cura == curb {
-                    // skip
-                    ma = ai.next();
-                    mb = bi.next();
-                } else if cura > curb {
-                    mb = bi.next();
-                } else {
-                    o.push(*cura);
-                    ma = ai.next();
+                match cura.cmp(&curb) {
+                    Ordering::Equal => {
+                        // skip
+                        ma = ai.next();
+                        mb = bi.next();
+                    },
+                    Ordering::Greater => {
+                        mb = bi.next();
+                    },
+                    Ordering::Less => {
+                        o.push(*cura);
+                        ma = ai.next();
+                    }
                 }
             }
             (None, _) => break,
