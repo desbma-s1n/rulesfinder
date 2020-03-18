@@ -21,7 +21,7 @@ fn worker_thread(
     r: crossbeam::channel::Receiver<Vec<rules::Rule>>,
     s: crossbeam::channel::Sender<HashMap<Vec<rules::Rule>, Vec<u64>>>,
     alines: Arc<Vec<Vec<u8>>>,
-    aclear: Arc<HashMap<Vec<u8>, Vec<(Vec<u8>, Vec<u8>, u64)>>>,
+    aclear: Arc<HashMap<Vec<u8>, Vec<cleartexts::FragmentContext>>>,
     cutoff: usize,
 ) {
     while let Ok(rules) = r.recv() {

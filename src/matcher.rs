@@ -4,12 +4,12 @@ extern crate crossbeam;
 use std::collections::BTreeSet;
 use std::collections::HashMap;
 
-use crate::rules;
+use crate::{cleartexts,rules};
 
 pub fn worker_logic(
     rules: Vec<rules::Rule>,
     wordlist: &[Vec<u8>],
-    aclear: &HashMap<Vec<u8>, Vec<(Vec<u8>, Vec<u8>, u64)>>,
+    aclear: &HashMap<Vec<u8>, Vec<cleartexts::FragmentContext>>,
     cutoff: usize,
 ) -> HashMap<Vec<rules::Rule>, Vec<u64>> {
     let mut hits: HashMap<Vec<rules::Rule>, BTreeSet<u64>> = HashMap::new();
@@ -19,32 +19,32 @@ pub fn worker_logic(
             Some(mutated) => match aclear.get(&mutated) {
                 None => (),
                 Some(matches) => {
-                    for (prefix, suffix, nth) in matches {
+                    for context in matches {
                         use rules::CommandRule::{Append, InsertString, Prefix};
                         use rules::Numerical::{Infinite, Val};
                         use rules::Rule::Command;
                         let mut currule = rules.clone();
-                        if !prefix.is_empty() {
-                            if prefix.len() == 1 {
-                                currule.push(Command(Prefix(prefix[0])));
+                        if !context.prefix.is_empty() {
+                            if context.prefix.len() == 1 {
+                                currule.push(Command(Prefix(context.prefix[0])));
                             } else {
-                                currule.push(Command(InsertString(Val(0), prefix.clone())));
+                                currule.push(Command(InsertString(Val(0), context.prefix.clone())));
                             }
                         }
-                        if !suffix.is_empty() {
-                            if suffix.len() == 1 {
-                                currule.push(Command(Append(suffix[0])));
+                        if !context.suffix.is_empty() {
+                            if context.suffix.len() == 1 {
+                                currule.push(Command(Append(context.suffix[0])));
                             } else {
-                                currule.push(Command(InsertString(Infinite, suffix.clone())));
+                                currule.push(Command(InsertString(Infinite, context.suffix.clone())));
                             }
                         }
                         hits.entry(currule)
                             .and_modify(|hs| {
-                                hs.insert(*nth);
+                                hs.insert(context.pos);
                             })
                             .or_insert_with(|| {
                                 let mut o = BTreeSet::new();
-                                o.insert(*nth);
+                                o.insert(context.pos);
                                 o
                             });
                     }
@@ -86,11 +86,11 @@ mod tests {
         cleartexts::process_line(&mut clears, 3, &conv("CBA"), 3);
         cleartexts::process_line(&mut clears, 4, &conv("0009lah"), 3);
 
-        let mut s01 = vec![0, 1];
-        let mut s2 = vec![2];
-        let mut s34 = vec![3, 4];
+        let s01 = vec![0, 1];
+        let s2 = vec![2];
+        let s34 = vec![3, 4];
 
-        let res_noop = worker_logic(vec![], &wordlist, &clears, 1);
+        let _res_noop = worker_logic(vec![], &wordlist, &clears, 1);
         let mut expected = HashMap::new();
         expected.insert(
             vec![Command(InsertString(Infinite, conv("12")))],
