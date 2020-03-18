@@ -84,7 +84,7 @@ pub fn process(
     let mut out = HashMap::with_capacity(expected_size * 7 / 10);
     let progress = ProgressBar::new(i);
     progress.set_style(indicatif::ProgressStyle::default_bar().template(
-        "[ETA: {eta_precise}] {bar:60.cyan/blue} {pos}/{len} - {msg} fragments inserted",
+        "[ETA: {eta_precise}] {bar:60} {pos}/{len} - {msg} fragments inserted",
     ));
     i = 0;
     for (k, line) in &idx {

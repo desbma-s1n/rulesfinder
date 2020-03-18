@@ -187,7 +187,7 @@ fn main() {
     let progress = ProgressBar::new(rules_count as u64);
     progress
         .set_style(indicatif::ProgressStyle::default_bar().template(
-            "[ETA: {eta_precise}] {bar:60.cyan/blue} {pos}/{len} - {msg} rules retained",
+            "[ETA: {eta_precise}] {bar:60} {pos}/{len} - {msg} rules retained",
         ));
     let mut retained = 0;
     for _ in 0..rules_count {
