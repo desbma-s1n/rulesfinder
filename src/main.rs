@@ -62,10 +62,10 @@ fn sub_set(a: &[u64], b: &[u64]) -> Vec<u64> {
                         // skip
                         ma = ai.next();
                         mb = bi.next();
-                    },
+                    }
                     Ordering::Greater => {
                         mb = bi.next();
-                    },
+                    }
                     Ordering::Less => {
                         o.push(*cura);
                         ma = ai.next();

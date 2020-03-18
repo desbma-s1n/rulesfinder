@@ -3,13 +3,11 @@ use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::{self, BufRead};
 
-
 pub struct FragmentContext {
     pub prefix: Vec<u8>,
     pub suffix: Vec<u8>,
     pub pos: u64,
 }
-
 
 pub fn process_line(
     out: &mut HashMap<Vec<u8>, Vec<FragmentContext>>,
@@ -28,17 +26,19 @@ pub fn process_line(
                 .and_modify(|x: &mut Vec<FragmentContext>| {
                     let prefix = line[0..start].to_vec();
                     let suffix = line[start + sz..].to_vec();
-                    x.push(FragmentContext {prefix,
+                    x.push(FragmentContext {
+                        prefix,
                         suffix,
-                        pos
+                        pos,
                     });
                 })
                 .or_insert({
                     let prefix = line[0..start].to_vec();
                     let suffix = line[start + sz..].to_vec();
-                    vec![FragmentContext {prefix,
+                    vec![FragmentContext {
+                        prefix,
                         suffix,
-                        pos
+                        pos,
                     }]
                 });
         }
@@ -105,7 +105,7 @@ mod tests {
     #[test]
     fn test1() {
         let mut out = HashMap::new();
-        let _inserted = process_line(&mut out, 0, &"ABCDEF".as_bytes().to_vec(), 3);
+        let _inserted = process_line(&mut out, 0, &b"ABCDEF".to_vec(), 3);
         let expected: &[(&str, (&str, &str))] = &[
             ("ABCDEF", ("", "")),
             ("ABCDE", ("", "F")),

@@ -4,7 +4,7 @@ extern crate crossbeam;
 use std::collections::BTreeSet;
 use std::collections::HashMap;
 
-use crate::{cleartexts,rules};
+use crate::{cleartexts, rules};
 
 pub fn worker_logic(
     rules: Vec<rules::Rule>,
@@ -35,7 +35,8 @@ pub fn worker_logic(
                             if context.suffix.len() == 1 {
                                 currule.push(Command(Append(context.suffix[0])));
                             } else {
-                                currule.push(Command(InsertString(Infinite, context.suffix.clone())));
+                                currule
+                                    .push(Command(InsertString(Infinite, context.suffix.clone())));
                             }
                         }
                         hits.entry(currule)
@@ -109,18 +110,18 @@ mod tests {
                 cmd_truncate3.clone(),
                 Command(InsertString(Infinite, conv("12"))),
             ],
-            s01.clone(),
+            s01,
         );
         expected.insert(
             vec![cmd_truncate3, Command(InsertString(Infinite, conv("DE")))],
-            s2.clone(),
+            s2,
         );
         assert_eq!(res_truncate3, expected);
 
         expected.clear();
         let cmd_reverse = Command(Reverse);
         let res_reverse = worker_logic(vec![cmd_reverse.clone()], &wordlist, &clears, 1);
-        expected.insert(vec![cmd_reverse], s34.clone());
+        expected.insert(vec![cmd_reverse], s34);
         assert_eq!(res_reverse, expected);
     }
 }

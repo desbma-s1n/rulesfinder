@@ -1,4 +1,3 @@
-use rand;
 use std::collections::HashMap;
 
 static CONV_SOURCE: &str = "`1234567890-=\\qwertyuiop[]asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+|QWERTYUIOP{}ASDFGHJKL:\"ZXCVBNM<>?";
@@ -1205,65 +1204,65 @@ mod tests {
 
     #[test]
     fn noop() {
-        mut_test("lol", &vec![Noop], "lol");
+        mut_test("lol", &[Noop], "lol");
     }
     #[test]
     fn tolower() {
-        mut_test("lOl1", &vec![ToLower], "lol1");
+        mut_test("lOl1", &[ToLower], "lol1");
     }
     #[test]
     fn toupper() {
-        mut_test("lOl1", &vec![ToUpper], "LOL1");
+        mut_test("lOl1", &[ToUpper], "LOL1");
     }
     #[test]
     fn capitalize() {
-        mut_test("lOl1", &vec![ToUpper], "LOL1");
+        mut_test("lOl1", &[ToUpper], "LOL1");
     }
     #[test]
     fn toggleall() {
-        mut_test(DEFPWD, &vec![ToggleAll], "AsqDQDF354GDRF;:;é&");
+        mut_test(DEFPWD, &[ToggleAll], "AsqDQDF354GDRF;:;é&");
     }
     #[test]
     fn dup_word_n_times() {
-        mut_test("P@ss", &vec![DupWordNTimes(Val(3))], "P@ssP@ssP@ss");
+        mut_test("P@ss", &[DupWordNTimes(Val(3))], "P@ssP@ssP@ss");
     }
     #[test]
     fn bitshift_right() {
-        mut_test("P@ss", &vec![BitshiftRight(Val(2))], "P@9s");
+        mut_test("P@ss", &[BitshiftRight(Val(2))], "P@9s");
     }
     #[test]
     fn bitshift_left() {
-        mut_test("P0ss", &vec![BitshiftLeft(Val(1))], "P`ss");
+        mut_test("P0ss", &[BitshiftLeft(Val(1))], "P`ss");
     }
     #[test]
     fn swap_first_two() {
-        mut_test("P@ss", &vec![SwapFirstTwo], "@Pss");
+        mut_test("P@ss", &[SwapFirstTwo], "@Pss");
     }
     #[test]
     fn swap_last_two() {
-        mut_test("P@sS", &vec![SwapLastTwo], "P@Ss");
+        mut_test("P@sS", &[SwapLastTwo], "P@Ss");
     }
     #[test]
     fn swap() {
         mut_test(
             "P@sS",
-            &vec![Memorize, Swap(Val(0), WordLastCharPos)],
+            &[Memorize, Swap(Val(0), WordLastCharPos)],
             "S@sP",
         );
     }
     #[test]
     fn increment() {
-        mut_test("P@ss", &vec![Increment(Val(1))], "PAss");
+        mut_test("P@ss", &[Increment(Val(1))], "PAss");
     }
     #[test]
     fn decrement() {
-        mut_test("P@ss", &vec![Decrement(Val(1))], "P?ss");
+        mut_test("P@ss", &[Decrement(Val(1))], "P?ss");
     }
     #[test]
     fn append_memory() {
         mut_test(
             "P@ss",
-            &vec![ToUpper, Memorize, ToLower, AppendMemory],
+            &[ToUpper, Memorize, ToLower, AppendMemory],
             "p@ssP@SS",
         );
     }
@@ -1271,109 +1270,109 @@ mod tests {
     fn prepend_memory() {
         mut_test(
             "P@ss",
-            &vec![ToUpper, Memorize, ToLower, PrependMemory],
+            &[ToUpper, Memorize, ToLower, PrependMemory],
             "P@SSp@ss",
         );
     }
     #[test]
     fn dupe_first_char() {
-        mut_test("P@ss", &vec![DupeFirstChar(Val(2))], "PPP@ss");
+        mut_test("P@ss", &[DupeFirstChar(Val(2))], "PPP@ss");
     }
     #[test]
     fn dupe_last_char() {
-        mut_test("P@sS", &vec![DupeLastChar(Val(2))], "P@sSSS");
+        mut_test("P@sS", &[DupeLastChar(Val(2))], "P@sSSS");
     }
     #[test]
     fn dupe_all_char() {
-        mut_test("P@sS", &vec![DupeAllChar], "PP@@ssSS");
+        mut_test("P@sS", &[DupeAllChar], "PP@@ssSS");
     }
     #[test]
     fn reverse_t() {
-        mut_test("Fred", &vec![Reverse], "derF");
+        mut_test("Fred", &[Reverse], "derF");
     }
     #[test]
     fn duplicate() {
-        mut_test("Fred", &vec![Duplicate], "FredFred");
+        mut_test("Fred", &[Duplicate], "FredFred");
     }
     #[test]
     fn reflect() {
-        mut_test("Fred", &vec![Reflect], "FredderF");
+        mut_test("Fred", &[Reflect], "FredderF");
     }
     #[test]
     fn rotl() {
-        mut_test("jsmith", &vec![RotLeft], "smithj");
+        mut_test("jsmith", &[RotLeft], "smithj");
     }
     #[test]
     fn rotr() {
-        mut_test("smithj", &vec![RotRight], "jsmith");
+        mut_test("smithj", &[RotRight], "jsmith");
     }
     #[test]
     fn shiftall() {
-        mut_test(DEFPWD, &vec![ShiftAll], "AsqDQDF#%$GDRF:;:é7");
+        mut_test(DEFPWD, &[ShiftAll], "AsqDQDF#%$GDRF:;:é7");
     }
     #[test]
     fn rule_v() {
         mut_test(
             DEFPWD,
-            &vec![LowerVowelsUpperConsonants],
+            &[LowerVowelsUpperConsonants],
             "aSQDQDF354GDRF;:;é&",
         );
     }
     #[test]
     fn shift_k_r() {
-        mut_test(DEFPWD, &vec![ShiftAllKeyboardRight], "sDWfwfg465hftg'\"'é*");
+        mut_test(DEFPWD, &[ShiftAllKeyboardRight], "sDWfwfg465hftg'\"'é*");
     }
     #[test]
     fn shift_k_l() {
-        mut_test(DEFPWD, &vec![ShiftAllKeyboardLeft], "aAQsqsd243fsedlLlé^");
+        mut_test(DEFPWD, &[ShiftAllKeyboardLeft], "aAQsqsd243fsedlLlé^");
     }
     #[test]
     fn omit_range() {
-        mut_test("012345678", &vec![OmitRange(Val(3), Val(4))], "01278");
+        mut_test("012345678", &[OmitRange(Val(3), Val(4))], "01278");
     }
     #[test]
     fn replace_with_next() {
-        mut_test("P@sS", &vec![ReplaceWithNext(Val(2))], "P@SS");
+        mut_test("P@sS", &[ReplaceWithNext(Val(2))], "P@SS");
     }
     #[test]
     fn replace_with_prior() {
-        mut_test("P@sS", &vec![ReplaceWithPrior(Val(2))], "P@@S");
+        mut_test("P@sS", &[ReplaceWithPrior(Val(2))], "P@@S");
     }
     #[test]
     fn duplicate_first() {
-        mut_test("P@sS", &vec![DupFirstString(Val(2))], "P@P@sS");
+        mut_test("P@sS", &[DupFirstString(Val(2))], "P@P@sS");
     }
     #[test]
     fn duplicate_last() {
-        mut_test("P@sS", &vec![DupLastString(Val(2))], "P@sSsS");
+        mut_test("P@sS", &[DupLastString(Val(2))], "P@sSsS");
     }
     #[test]
     fn title_case() {
         mut_test(
             "test word",
-            &vec![TitleCase(OneOf(CCWhitespace))],
+            &[TitleCase(OneOf(CCWhitespace))],
             "Test Word",
         );
     }
     #[test]
     fn toggle_case() {
-        mut_test(DEFPWD, &vec![ToggleCase(Val(6))], "aSQdqdF354gdrf;:;é&");
+        mut_test(DEFPWD, &[ToggleCase(Val(6))], "aSQdqdF354gdrf;:;é&");
     }
     #[test]
     fn toggle_shift() {
-        mut_test(DEFPWD, &vec![ToggleShift(Val(6))], "aSQdqdF354gdrf;:;é&");
+        mut_test(DEFPWD, &[ToggleShift(Val(6))], "aSQdqdF354gdrf;:;é&");
     }
     #[test]
     fn insert_string() {
         mut_test(
             DEFPWD,
-            &vec![InsertString(Val(3), vec![b'l', b'o', b'l'])],
+            &[InsertString(Val(3), vec![b'l', b'o', b'l'])],
             "aSQloldqdf354gdrf;:;é&",
         );
     }
     #[test]
     fn truncate() {
-        mut_test(DEFPWD, &vec![Truncate(Val(6))], "aSQdqd");
+        mut_test(DEFPWD, &[Truncate(Val(6))], "aSQdqd");
     }
     #[test]
     fn pluralize() {
@@ -1386,7 +1385,7 @@ mod tests {
             "puves", "payes", "julies",
         ];
         for (&t, &e) in tests.iter().zip(expected.iter()) {
-            mut_test(t, &vec![Pluralize], e);
+            mut_test(t, &[Pluralize], e);
         }
     }
     #[test]
@@ -1394,7 +1393,7 @@ mod tests {
         let tests = vec!["bed", "beg", "ped", "poe", "pid"];
         let expected = vec!["bed", "begged", "ped", "poed", "pided"];
         for (&t, &e) in tests.iter().zip(expected.iter()) {
-            mut_test(t, &vec![PastTense], e);
+            mut_test(t, &[PastTense], e);
         }
     }
     #[test]
@@ -1402,46 +1401,46 @@ mod tests {
         let tests = vec!["ping", "pang", "poo", "pan"];
         let expected = vec!["ping", "pangging", "poing", "paning"];
         for (&t, &e) in tests.iter().zip(expected.iter()) {
-            mut_test(t, &vec![Genitive], e);
+            mut_test(t, &[Genitive], e);
         }
     }
     #[test]
     fn append() {
-        mut_test("Fred", &vec![Append(b'x')], "Fredx");
+        mut_test("Fred", &[Append(b'x')], "Fredx");
     }
     #[test]
     fn prefix() {
-        mut_test("Fred", &vec![Prefix(b'x')], "xFred");
+        mut_test("Fred", &[Prefix(b'x')], "xFred");
     }
     #[test]
     fn delete_first() {
-        mut_test("Fred", &vec![DeleteFirst], "red");
+        mut_test("Fred", &[DeleteFirst], "red");
     }
     #[test]
     fn delete_last() {
-        mut_test("Fred", &vec![DeleteLast], "Fre");
+        mut_test("Fred", &[DeleteLast], "Fre");
     }
     #[test]
     fn extract_insert() {
         mut_test(
             "p@ssW0rd",
-            &vec![ToLower, ExtractInsert(Val(4), Val(2), Val(8))],
+            &[ToLower, ExtractInsert(Val(4), Val(2), Val(8))],
             "p@ssw0rdW0",
         );
     }
     #[test]
     fn delete_at() {
-        mut_test(DEFPWD, &vec![DeleteAt(Val(4))], "aSQddf354gdrf;:;é&");
+        mut_test(DEFPWD, &[DeleteAt(Val(4))], "aSQddf354gdrf;:;é&");
     }
     #[test]
     fn extract() {
-        mut_test(DEFPWD, &vec![Extract(Val(3), Val(5))], "dqdf3");
+        mut_test(DEFPWD, &[Extract(Val(3), Val(5))], "dqdf3");
     }
     #[test]
     fn insertchar() {
         mut_test(
             DEFPWD,
-            &vec![InsertChar(Val(3), b'K')],
+            &[InsertChar(Val(3), b'K')],
             "aSQKdqdf354gdrf;:;é&",
         );
     }
@@ -1449,7 +1448,7 @@ mod tests {
     fn overstrike() {
         mut_test(
             DEFPWD,
-            &vec![Overstrike(Val(3), b'K')],
+            &[Overstrike(Val(3), b'K')],
             "aSQKqdf354gdrf;:;é&",
         );
     }
@@ -1457,7 +1456,7 @@ mod tests {
     fn replace_all() {
         mut_test(
             DEFPWD,
-            &vec![ReplaceAll(OneOf(CCPunctuation), b'0')],
+            &[ReplaceAll(OneOf(CCPunctuation), b'0')],
             "aSQdqdf354gdrf000é&",
         );
     }
@@ -1465,7 +1464,7 @@ mod tests {
     fn purge_all() {
         mut_test(
             DEFPWD,
-            &vec![PurgeAll(OneOf(CCPunctuation))],
+            &[PurgeAll(OneOf(CCPunctuation))],
             "aSQdqdf354gdrfé&",
         );
     }
