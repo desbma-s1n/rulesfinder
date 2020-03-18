@@ -53,7 +53,7 @@ pub fn worker_logic(
         };
     }
     hits.retain(|_, st| st.len() >= cutoff);
-    let mut res : HashMap<Vec<rules::Rule>, Vec<u64>> = HashMap::new();
+    let mut res: HashMap<Vec<rules::Rule>, Vec<u64>> = HashMap::new();
     for (k, st) in &hits {
         let mut v = Vec::new();
         for e in st {

@@ -53,8 +53,8 @@ fn sub_set(a: &Vec<u64>, b: &Vec<u64>) -> Vec<u64> {
     let mut ma = ai.next();
     let mut mb = bi.next();
     loop {
-        match(ma, mb) {
-            (Some(cura), Some(curb)) =>
+        match (ma, mb) {
+            (Some(cura), Some(curb)) => {
                 if cura == curb {
                     // skip
                     ma = ai.next();
@@ -64,7 +64,8 @@ fn sub_set(a: &Vec<u64>, b: &Vec<u64>) -> Vec<u64> {
                 } else {
                     o.push(*cura);
                     ma = ai.next();
-                },
+                }
+            }
             (None, _) => break,
             (Some(cura), None) => {
                 o.push(*cura);
