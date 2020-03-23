@@ -53,10 +53,7 @@ pub fn process(
     path: &str,
     minsize: usize,
     known: &HashSet<&Vec<u8>>,
-) -> io::Result<(
-    HashMap<Vec<u8>, Vec<FragmentContext>>,
-    CleartextIndex,
-)> {
+) -> io::Result<(HashMap<Vec<u8>, Vec<FragmentContext>>, CleartextIndex)> {
     let mut idx = HashMap::new();
 
     let file = File::open(path)?;
@@ -83,9 +80,10 @@ pub fn process(
     // compared to what's inside the map ...
     let mut out = HashMap::with_capacity(expected_size * 7 / 10);
     let progress = ProgressBar::new(i);
-    progress.set_style(indicatif::ProgressStyle::default_bar().template(
-        "[ETA: {eta_precise}] {bar:60} {pos}/{len} - {msg} fragments inserted",
-    ));
+    progress.set_style(
+        indicatif::ProgressStyle::default_bar()
+            .template("[ETA: {eta_precise}] {bar:60} {pos}/{len} - {msg} fragments inserted"),
+    );
     i = 0;
     for (k, line) in &idx {
         inserted += process_line(&mut out, *k, &line, minsize);

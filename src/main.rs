@@ -185,10 +185,10 @@ fn main() {
     let mut hits: HashMap<Vec<rules::Rule>, Vec<u64>> = HashMap::new();
 
     let progress = ProgressBar::new(rules_count as u64);
-    progress
-        .set_style(indicatif::ProgressStyle::default_bar().template(
-            "[ETA: {eta_precise}] {bar:60} {pos}/{len} - {msg} rules retained",
-        ));
+    progress.set_style(
+        indicatif::ProgressStyle::default_bar()
+            .template("[ETA: {eta_precise}] {bar:60} {pos}/{len} - {msg} rules retained"),
+    );
     let mut retained = 0;
     for _ in 0..rules_count {
         let cur_hits = recv_hits.recv().unwrap();
